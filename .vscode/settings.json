@@ -1,7 +1,5 @@
 {
-  "cSpell.words": [
-    "medsim"
-  ],
+  "cSpell.words": ["medsim"],
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
