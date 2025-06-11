@@ -1,26 +1,24 @@
 import js from '@eslint/js';
-import globals from 'globals';
+import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 
-export default [
-  {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    languageOptions: {
-      globals: globals.browser,
-      ecmaVersion: 2020,
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-    rules: {
-      'react/react-in-jsx-scope': 'off',
-      'react/jsx-no-target-blank': 'warn',
+export default defineConfig({
+  files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+  settings: {
+    react: {
+      version: 'detect',
     },
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-];
+  plugins: {
+    react: pluginReact,
+  },
+  extends: [
+    js.configs.recommended,
+    ...tseslint.configs.recommended,
+    pluginReact.configs.flat.recommended,
+  ],
+  rules: {
+    'react/react-in-jsx-scope': 'off', // Not needed with React 17+
+  },
+});
