@@ -1,4 +1,8 @@
 {
   "name": "medsim-ai",
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true
 }
