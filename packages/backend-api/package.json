@@ -1,5 +1,5 @@
 {
-  "name": "delete-test-01",
+  "name": "@medsim-ai/delete-test-01",
   "description": "delete-test-01-description",
   "version": "0.0.1",
   "private": true,
@@ -8,11 +8,19 @@
     "@aws-sdk/lib-dynamodb": "^3.398.0"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.10.0",
     "aws-sdk-client-mock": "^2.0.0",
-    "jest": "^29.2.1"
+    "esbuild": "^0.19.8",
+    "jest": "^29.2.1",
+    "typescript": "^5.3.0"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+    "build": "esbuild src/handlers/*.ts --bundle --platform=node --target=node22 --outdir=dist/handlers --external:@aws-sdk/*",
+    "build:watch": "npm run build -- --watch",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "typecheck": "tsc --noEmit"
   },
   "jest": {
     "testMatch": [

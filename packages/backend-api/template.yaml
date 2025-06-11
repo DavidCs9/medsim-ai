@@ -10,11 +10,11 @@ Resources:
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
-  # This is a Lambda function config associated with the source code: get-all-items.js
+  # This is a Lambda function config associated with the source code: get-all-items.ts
   getAllItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-all-items.getAllItemsHandler
+      Handler: dist/handlers/get-all-items.getAllItemsHandler
       Runtime: nodejs22.x
       Architectures:
       - x86_64
@@ -39,11 +39,11 @@ Resources:
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
-  # This is a Lambda function config associated with the source code: get-by-id.js
+  # This is a Lambda function config associated with the source code: get-by-id.ts
   getByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-by-id.getByIdHandler
+      Handler: dist/handlers/get-by-id.getByIdHandler
       Runtime: nodejs22.x
       Architectures:
       - x86_64
@@ -68,11 +68,11 @@ Resources:
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
-  # This is a Lambda function config associated with the source code: put-item.js
+  # This is a Lambda function config associated with the source code: put-item.ts
   putItemFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/put-item.putItemHandler
+      Handler: dist/handlers/put-item.putItemHandler
       Runtime: nodejs22.x
       Architectures:
       - x86_64

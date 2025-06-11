@@ -1,8 +1,9 @@
 // Create clients and set shared const values outside of the handler.
 
-// Create a DocumentClient that represents the query to add an item
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+
 const client = new DynamoDBClient({});
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 
@@ -12,7 +13,9 @@ const tableName = process.env.SAMPLE_TABLE;
 /**
  * A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
  */
-export const getByIdHandler = async (event) => {
+export const getByIdHandler = async (
+  event: APIGatewayProxyEvent,
+): Promise<APIGatewayProxyResult> => {
   if (event.httpMethod !== "GET") {
     throw new Error(
       `getMethod only accept GET method, you tried: ${event.httpMethod}`,
@@ -22,23 +25,35 @@ export const getByIdHandler = async (event) => {
   console.info("received:", event);
 
   // Get id from pathParameters from APIGateway because of `/{id}` at template.yaml
-  const id = event.pathParameters.id;
+  const id = event.pathParameters?.id;
+
+  if (!id) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "Missing id parameter" }),
+    };
+  }
 
   // Get the item from the table
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property
-  var params = {
+  const params = {
     TableName: tableName,
     Key: { id: id },
   };
 
+  let item;
   try {
     const data = await ddbDocClient.send(new GetCommand(params));
-    var item = data.Item;
+    item = data.Item;
   } catch (err) {
     console.log("Error", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Failed to fetch item" }),
+    };
   }
 
-  const response = {
+  const response: APIGatewayProxyResult = {
     statusCode: 200,
     body: JSON.stringify(item),
   };

@@ -4,6 +4,9 @@
 # Node.js specific (if using Node.js)
 node_modules/
 
+# TypeScript build output
+dist/
+
 # OS specific files
 .DS_Store
 Thumbs.db
