@@ -11,9 +11,9 @@ export default defineConfig([
     extends: [js.configs.recommended],
   },
 
-  // Node.js backend configuration
+  // Serverless ts api configuration
   {
-    files: ["packages/backend-api/**/*.{js,mjs,cjs}"],
+    files: ["packages/backend-api/**/*.{ts}"],
     languageOptions: {
       globals: {
         ...globals.node,
