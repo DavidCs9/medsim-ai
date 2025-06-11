@@ -6,11 +6,11 @@
   ],
   "private": true,
   "scripts": {
-    "lint": "eslint ./packages/**/*.{js,ts,jsx,tsx} --ignore-path .gitignore",
-    "lint:fix": "eslint ./packages/**/*.{js,ts,jsx,tsx}  --fix",
+    "lint": "eslint ./packages/**/*.{js,mjs,ts,jsx,tsx} --ignore-path .gitignore",
+    "lint:fix": "eslint ./packages/**/*.{js,mjs,ts,jsx,tsx} --fix",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write ./packages/**/*.{js,ts,jsx,tsx,json,md}",
-    "format:check": "prettier --check ./packages/**/*.{js,ts,jsx,tsx,json,md}"
+    "format": "prettier --write ./packages/**/*.{js,mjs,ts,jsx,tsx,json,md}",
+    "format:check": "prettier --check ./packages/**/*.{js,mjs,ts,jsx,tsx,json,md}"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
