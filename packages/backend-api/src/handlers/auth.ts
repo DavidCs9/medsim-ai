@@ -100,11 +100,11 @@ export const signUpHandler = async (
         email: email,
       }),
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Sign up error:", error);
 
     let errorMessage = "Failed to create user";
-    if (error.name === "UsernameExistsException") {
+    if (error instanceof Error && error.name === "UsernameExistsException") {
       errorMessage = "User already exists";
     }
 
@@ -183,13 +183,16 @@ export const signInHandler = async (
         expiresIn: result.AuthenticationResult.ExpiresIn,
       }),
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Sign in error:", error);
 
     let errorMessage = "Authentication failed";
-    if (error.name === "NotAuthorizedException") {
+    if (error instanceof Error && error.name === "NotAuthorizedException") {
       errorMessage = "Invalid email or password";
-    } else if (error.name === "UserNotFoundException") {
+    } else if (
+      error instanceof Error &&
+      error.name === "UserNotFoundException"
+    ) {
       errorMessage = "User not found";
     }
 
@@ -273,7 +276,7 @@ export const getUserProfileHandler = async (
         userStatus: userDetails.UserStatus,
       }),
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Get user profile error:", error);
 
     return {
