@@ -4,5 +4,8 @@
   "workspaces": [
     "packages/*"
   ],
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "prettier": "3.5.3"
+  }
 }
