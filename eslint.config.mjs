@@ -15,15 +15,12 @@ export default [
         version: 'detect',
       },
     },
-  },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/jsx-no-target-blank': 'warn',
     },
   },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
 ];
