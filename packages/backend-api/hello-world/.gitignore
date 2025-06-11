@@ -1,1 +1,14 @@
-node_modules
+# AWS SAM build artifacts
+.aws-sam/
+
+# Node.js specific (if using Node.js)
+node_modules/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Other potential temporary files
+*.log
+*.swp
+.env
