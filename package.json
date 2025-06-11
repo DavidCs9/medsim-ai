@@ -9,8 +9,8 @@
     "lint": "eslint ./packages",
     "lint:fix": "eslint ./packages --fix",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write ./packages",
+    "format:check": "prettier --check ./packages"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
