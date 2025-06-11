@@ -26,8 +26,15 @@ export const putItemHandler = async (
       `postMethod only accepts POST method, you tried: ${event.httpMethod} method.`,
     );
   }
+
+  // Extract user information from Cognito claims
+  const cognitoUser = event.requestContext.authorizer?.claims;
+  const userId = cognitoUser?.sub;
+  const userEmail = cognitoUser?.email;
+
   // All log statements are written to CloudWatch
   console.info("received:", event);
+  console.info("authenticated user:", { userId, userEmail });
 
   if (!event.body) {
     return {

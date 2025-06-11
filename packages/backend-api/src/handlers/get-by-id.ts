@@ -21,8 +21,15 @@ export const getByIdHandler = async (
       `getMethod only accept GET method, you tried: ${event.httpMethod}`,
     );
   }
+
+  // Extract user information from Cognito claims
+  const cognitoUser = event.requestContext.authorizer?.claims;
+  const userId = cognitoUser?.sub;
+  const userEmail = cognitoUser?.email;
+
   // All log statements are written to CloudWatch
   console.info("received:", event);
+  console.info("authenticated user:", { userId, userEmail });
 
   // Get id from pathParameters from APIGateway because of `/{id}` at template.yaml
   const id = event.pathParameters?.id;
