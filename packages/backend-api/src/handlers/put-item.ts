@@ -40,7 +40,7 @@ export const putItemHandler = async (
   let body: ItemBody;
   try {
     body = JSON.parse(event.body) as ItemBody;
-  } catch (err) {
+  } catch {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: "Invalid JSON in request body" }),
