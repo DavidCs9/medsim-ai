@@ -1757,13 +1757,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medsim-ai/delete-test-01@workspace:packages/backend-api":
+"@medsim-ai/backend-api@workspace:packages/backend-api":
   version: 0.0.0-use.local
-  resolution: "@medsim-ai/delete-test-01@workspace:packages/backend-api"
+  resolution: "@medsim-ai/backend-api@workspace:packages/backend-api"
   dependencies:
     "@aws-sdk/client-cognito-identity-provider": "npm:^3.398.0"
     "@aws-sdk/client-dynamodb": "npm:^3.398.0"
     "@aws-sdk/lib-dynamodb": "npm:^3.398.0"
+    "@medsim-ai/shared-types": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^20.10.0"
@@ -1771,6 +1772,7 @@ __metadata:
     esbuild: "npm:^0.20.0"
     jest: "npm:^29.2.1"
     typescript: "npm:^5.3.0"
+    zod: "npm:^3.24.1"
   languageName: unknown
   linkType: soft
 
@@ -1779,6 +1781,7 @@ __metadata:
   resolution: "@medsim-ai/frontend@workspace:packages/frontend"
   dependencies:
     "@eslint/js": "npm:^9.25.0"
+    "@medsim-ai/shared-types": "workspace:*"
     "@types/react": "npm:^19.1.2"
     "@types/react-dom": "npm:^19.1.2"
     "@vitejs/plugin-react": "npm:^4.4.1"
@@ -1787,6 +1790,16 @@ __metadata:
     react-dom: "npm:^19.1.0"
     typescript: "npm:~5.8.3"
     vite: "npm:^6.3.5"
+    zod: "npm:^3.24.1"
+  languageName: unknown
+  linkType: soft
+
+"@medsim-ai/shared-types@workspace:*, @medsim-ai/shared-types@workspace:packages/shared-types":
+  version: 0.0.0-use.local
+  resolution: "@medsim-ai/shared-types@workspace:packages/shared-types"
+  dependencies:
+    typescript: "npm:^5.8.3"
+    zod: "npm:^3.24.1"
   languageName: unknown
   linkType: soft
 
@@ -5967,6 +5980,7 @@ __metadata:
     prettier: "npm:^3.5.3"
     typescript: "npm:^5.8.3"
     typescript-eslint: "npm:^8.34.0"
+    zod: "npm:^3.24.1"
   languageName: unknown
   linkType: soft
 
@@ -7862,5 +7876,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.1":
+  version: 3.25.64
+  resolution: "zod@npm:3.25.64"
+  checksum: 10c0/00d76093a999e377e4ffd037fa7185e861c35917e8c4272f514115c206a0654995168f57fb71708b11e0a9243206d988b7f63b543404e1796402e50d346a6bd7
   languageName: node
   linkType: hard
