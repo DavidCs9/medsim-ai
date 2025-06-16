@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   hello-world
 Transform:
-- AWS::Serverless-2016-10-31
+  - AWS::Serverless-2016-10-31
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
@@ -39,9 +39,9 @@ Resources:
       ClientName: !Sub ${AWS::StackName}-UserPoolClient
       GenerateSecret: false
       ExplicitAuthFlows:
-        - ADMIN_NO_SRP_AUTH
-        - USER_PASSWORD_AUTH
-        - ALLOW_USER_SRP_AUTH
+        - ALLOW_USER_AUTH
+        - ALLOW_ADMIN_USER_PASSWORD_AUTH
+        - ALLOW_USER_PASSWORD_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
       SupportedIdentityProviders:
         - COGNITO
@@ -63,15 +63,16 @@ Resources:
       Handler: dist/handlers/get-all-items.getAllItemsHandler
       Runtime: nodejs22.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get all items from
+      Description:
+        A simple example includes a HTTP get method to get all items from
         a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
-      - DynamoDBCrudPolicy:
-          TableName: !Ref SampleTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SampleTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
@@ -84,6 +85,8 @@ Resources:
             Method: GET
             Auth:
               Authorizer: CognitoAuthorizer
+    Metadata:
+      BuildMethod: makefile # <-- Add this
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
@@ -94,15 +97,16 @@ Resources:
       Handler: dist/handlers/get-by-id.getByIdHandler
       Runtime: nodejs22.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get one item by
+      Description:
+        A simple example includes a HTTP get method to get one item by
         id from a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
-      - DynamoDBCrudPolicy:
-          TableName: !Ref SampleTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SampleTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
@@ -125,15 +129,16 @@ Resources:
       Handler: dist/handlers/put-item.putItemHandler
       Runtime: nodejs22.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP post method to add one item to
+      Description:
+        A simple example includes a HTTP post method to add one item to
         a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
-      - DynamoDBCrudPolicy:
-          TableName: !Ref SampleTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SampleTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
@@ -146,7 +151,9 @@ Resources:
             Method: POST
             Auth:
               Authorizer: CognitoAuthorizer
-  
+    Metadata:
+      BuildMethod: makefile # <-- Add this
+
   # Authentication functions that don't require authorization
   signUpFunction:
     Type: AWS::Serverless::Function
@@ -154,17 +161,17 @@ Resources:
       Handler: dist/handlers/auth.signUpHandler
       Runtime: nodejs22.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Handle user registration
       Policies:
         - Statement:
-          - Effect: Allow
-            Action:
-              - cognito-idp:AdminCreateUser
-              - cognito-idp:AdminSetUserPassword
-            Resource: !GetAtt UserPool.Arn
+            - Effect: Allow
+              Action:
+                - cognito-idp:AdminCreateUser
+                - cognito-idp:AdminSetUserPassword
+              Resource: !GetAtt UserPool.Arn
       Environment:
         Variables:
           USER_POOL_ID: !Ref UserPool
@@ -177,6 +184,8 @@ Resources:
             Method: POST
             Auth:
               Authorizer: NONE
+    Metadata:
+      BuildMethod: makefile # <-- Add this
 
   signInFunction:
     Type: AWS::Serverless::Function
@@ -184,16 +193,16 @@ Resources:
       Handler: dist/handlers/auth.signInHandler
       Runtime: nodejs22.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Handle user authentication
       Policies:
         - Statement:
-          - Effect: Allow
-            Action:
-              - cognito-idp:AdminInitiateAuth
-            Resource: !GetAtt UserPool.Arn
+            - Effect: Allow
+              Action:
+                - cognito-idp:AdminInitiateAuth
+              Resource: !GetAtt UserPool.Arn
       Environment:
         Variables:
           USER_POOL_ID: !Ref UserPool
@@ -206,6 +215,8 @@ Resources:
             Method: POST
             Auth:
               Authorizer: NONE
+    Metadata:
+      BuildMethod: makefile # <-- Add this
 
   getUserProfileFunction:
     Type: AWS::Serverless::Function
@@ -213,16 +224,16 @@ Resources:
       Handler: dist/handlers/auth.getUserProfileHandler
       Runtime: nodejs22.x
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Get user profile information
       Policies:
         - Statement:
-          - Effect: Allow
-            Action:
-              - cognito-idp:AdminGetUser
-            Resource: !GetAtt UserPool.Arn
+            - Effect: Allow
+              Action:
+                - cognito-idp:AdminGetUser
+              Resource: !GetAtt UserPool.Arn
       Environment:
         Variables:
           USER_POOL_ID: !Ref UserPool
@@ -235,9 +246,8 @@ Resources:
             Method: GET
             Auth:
               Authorizer: CognitoAuthorizer
-
-  # Simple syntax to create a DynamoDB table with a single attribute primary key, more in
-  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlesssimpletable
+    Metadata:
+      BuildMethod: makefile # <-- Add this
 
   # DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
   SampleTable:
@@ -262,24 +272,24 @@ Resources:
     Properties:
       ResourceGroupName:
         Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: 'true'
+      AutoConfigurationEnabled: "true"
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
-  
+
   UserPoolId:
     Description: Cognito User Pool ID
     Value: !Ref UserPool
     Export:
       Name: !Sub ${AWS::StackName}-UserPoolId
-  
+
   UserPoolClientId:
     Description: Cognito User Pool Client ID
     Value: !Ref UserPoolClient
     Export:
       Name: !Sub ${AWS::StackName}-UserPoolClientId
-  
+
   UserPoolArn:
     Description: Cognito User Pool ARN
     Value: !GetAtt UserPool.Arn

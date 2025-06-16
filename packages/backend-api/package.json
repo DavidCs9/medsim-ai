@@ -1,6 +1,6 @@
 {
-  "name": "@medsim-ai/delete-test-01",
-  "description": "delete-test-01-description",
+  "name": "@medsim-ai/backend-api",
+  "description": "Backend API for MedSim AI",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
