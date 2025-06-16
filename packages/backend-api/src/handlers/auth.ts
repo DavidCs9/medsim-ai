@@ -7,17 +7,12 @@ import {
   MessageActionType,
 } from "@aws-sdk/client-cognito-identity-provider";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { SignUpRequestSchema } from "@medsim-ai/shared-types";
 
 const cognitoClient = new CognitoIdentityProviderClient({});
 
 const USER_POOL_ID = process.env.USER_POOL_ID;
 const USER_POOL_CLIENT_ID = process.env.USER_POOL_CLIENT_ID;
-
-interface SignUpBody {
-  email: string;
-  password: string;
-  name?: string;
-}
 
 interface SignInBody {
   email: string;
@@ -42,7 +37,7 @@ export const signUpHandler = async (
   }
 
   try {
-    const body: SignUpBody = JSON.parse(event.body || "{}");
+    const body = SignUpRequestSchema.parse(JSON.parse(event.body || "{}"));
     const { email, password, name } = body;
 
     if (!email || !password) {
