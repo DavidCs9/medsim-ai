@@ -11,6 +11,11 @@ export default defineConfig([
     extends: [js.configs.recommended],
   },
 
+  // exclude dist and node_modules directories
+  {
+    ignores: ["dist", "node_modules"],
+  },
+
   // Serverless ts api configuration
   {
     files: ["packages/backend-api/**/*.{ts}"],
@@ -18,6 +23,19 @@ export default defineConfig([
       globals: {
         ...globals.node,
         ...globals.jest,
+      },
+      ecmaVersion: 2022,
+      sourceType: "module",
+    },
+    extends: [js.configs.recommended],
+  },
+
+  // Shared types configuration
+  {
+    files: ["packages/shared-types/**/*.{js,ts}"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
       },
       ecmaVersion: 2022,
       sourceType: "module",
